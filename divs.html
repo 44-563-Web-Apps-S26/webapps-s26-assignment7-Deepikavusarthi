@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vusarthi Deepika builds list with divs</title>
+
+<style>
+    .flex-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .divlist {
+        border: 1px solid black;
+        padding: 10px;
+        background-color: lightblue;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>Vusarthi Deepika builds list with divs</h1>
+
+<input type="text" id="inputItem" placeholder="Enter item">
+
+<button onclick="addEnd()">Add end</button>
+
+<div class="flex-container" id="container">
+
+    <div class="divlist">Item 1</div>
+    <div class="divlist">Item 2</div>
+    <div class="divlist">Item 3</div>
+
+</div>
+
+<script>
+
+function addEnd() {
+
+    let inputValue = document.getElementById("inputItem").value;
+
+    let newDiv = document.createElement("div");
+
+    newDiv.innerHTML = inputValue;
+
+    newDiv.className = "divlist";
+
+    let container = document.getElementById("container");
+
+    container.appendChild(newDiv);
+}
+
+</script>
+
+</body>
+</html>
