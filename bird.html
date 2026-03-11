@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vusarthi Deepika Bird Hunt</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .box {
+            margin: 10px;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ccc;
+            width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 6px;
+        }
+
+        #helpButton {
+            cursor: pointer;
+            color: blue;
+            font-weight: bold;
+        }
+
+        #gameField {
+            margin-top: 20px;
+            display: inline-block;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+
+        .cell {
+            width: 70px;
+            height: 70px;
+            margin: 3px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vusarthi Deepika Bird Hunt</h1>
+
+    <div class="box">
+        Click on the locations to find the birds, watch out for the forbidden statue.
+    </div>
+
+    <div id="locations" class="box">
+        Number of locations checked is zero.
+    </div>
+
+    <div id="score" class="box">
+        Score is zero.
+    </div>
+
+    <div id="helpButton" class="box" onclick="help()">
+        Click for help.
+    </div>
+
+    <div id="help" class="box">
+        Help report
+    </div>
+
+    <div id="gameField">
+
+        <div class="row">
+            <div class="cell"><img id="img0" src="bush.jpg" onclick="check(0)"></div>
+            <div class="cell"><img id="img1" src="bush.jpg" onclick="check(1)"></div>
+            <div class="cell"><img id="img2" src="bush.jpg" onclick="check(2)"></div>
+            <div class="cell"><img id="img3" src="bush.jpg" onclick="check(3)"></div>
+            <div class="cell"><img id="img4" src="bush.jpg" onclick="check(4)"></div>
+            <div class="cell"><img id="img5" src="bush.jpg" onclick="check(5)"></div>
+            <div class="cell"><img id="img6" src="bush.jpg" onclick="check(6)"></div>
+        </div>
+
+        <div class="row">
+            <div class="cell"><img id="img7" src="bush.jpg" onclick="check(7)"></div>
+            <div class="cell"><img id="img8" src="bush.jpg" onclick="check(8)"></div>
+            <div class="cell"><img id="img9" src="bush.jpg" onclick="check(9)"></div>
+            <div class="cell"><img id="img10" src="bush.jpg" onclick="check(10)"></div>
+            <div class="cell"><img id="img11" src="bush.jpg" onclick="check(11)"></div>
+            <div class="cell"><img id="img12" src="bush.jpg" onclick="check(12)"></div>
+            <div class="cell"><img id="img13" src="bush.jpg" onclick="check(13)"></div>
+        </div>
+
+        <div class="row">
+            <div class="cell"><img id="img14" src="bush.jpg" onclick="check(14)"></div>
+            <div class="cell"><img id="img15" src="bush.jpg" onclick="check(15)"></div>
+            <div class="cell"><img id="img16" src="bush.jpg" onclick="check(16)"></div>
+            <div class="cell"><img id="img17" src="bush.jpg" onclick="check(17)"></div>
+            <div class="cell"><img id="img18" src="bush.jpg" onclick="check(18)"></div>
+            <div class="cell"><img id="img19" src="bush.jpg" onclick="check(19)"></div>
+            <div class="cell"><img id="img20" src="bush.jpg" onclick="check(20)"></div>
+        </div>
+
+        <div class="row">
+            <div class="cell"><img id="img21" src="bush.jpg" onclick="check(21)"></div>
+            <div class="cell"><img id="img22" src="bush.jpg" onclick="check(22)"></div>
+            <div class="cell"><img id="img23" src="bush.jpg" onclick="check(23)"></div>
+            <div class="cell"><img id="img24" src="bush.jpg" onclick="check(24)"></div>
+            <div class="cell"><img id="img25" src="bush.jpg" onclick="check(25)"></div>
+            <div class="cell"><img id="img26" src="bush.jpg" onclick="check(26)"></div>
+            <div class="cell"><img id="img27" src="bush.jpg" onclick="check(27)"></div>
+        </div>
+
+        <div class="row">
+            <div class="cell"><img id="img28" src="bush.jpg" onclick="check(28)"></div>
+            <div class="cell"><img id="img29" src="bush.jpg" onclick="check(29)"></div>
+            <div class="cell"><img id="img30" src="bush.jpg" onclick="check(30)"></div>
+            <div class="cell"><img id="img31" src="bush.jpg" onclick="check(31)"></div>
+            <div class="cell"><img id="img32" src="bush.jpg" onclick="check(32)"></div>
+            <div class="cell"><img id="img33" src="bush.jpg" onclick="check(33)"></div>
+            <div class="cell"><img id="img34" src="bush.jpg" onclick="check(34)"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const ids = [
+            "img0", "img1", "img2", "img3", "img4", "img5", "img6",
+            "img7", "img8", "img9", "img10", "img11", "img12", "img13",
+            "img14", "img15", "img16", "img17", "img18", "img19", "img20",
+            "img21", "img22", "img23", "img24", "img25", "img26", "img27",
+            "img28", "img29", "img30", "img31", "img32", "img33", "img34"
+        ];
+
+        let score = 0;
+        let locationsVisited = 0;
+        let lastLocation = 0;
+        let statueLocation = 19;
+        let toucanLocation = 14;
+        let lorikeetLocations = [3, 25];
+        let buntingLocations = [2, 5, 11, 20, 21];
+        let gameOver = false;
+
+        function check(position) {
+            if (gameOver) {
+                return;
+            }
+
+            let id = ids[position];
+            let image = document.getElementById(id);
+
+            if (position === statueLocation) {
+                image.src = "statue.jpg";
+                image.onclick = null;
+                score = score - 3;
+                gameOver = true;
+            } else if (position === toucanLocation) {
+                image.src = "toucan.jpg";
+                image.onclick = null;
+                score = score + 5;
+            } else if (lorikeetLocations.includes(position)) {
+                image.src = "lorikeet.jpg";
+                image.onclick = null;
+                score = score + 3;
+            } else if (buntingLocations.includes(position)) {
+                image.src = "bunting.jpg";
+                image.onclick = null;
+                score = score + 1;
+            }
+
+            locationsVisited = locationsVisited + 1;
+            lastLocation = position;
+
+            document.getElementById("locations").innerHTML =
+                "Number of locations checked is " + locationsVisited + ".";
+
+            document.getElementById("score").innerHTML =
+                "Score is " + score + ".";
+        }
+
+        function help() {
+            let result = "silence";
+
+            let buntingNeighbors = [
+                (lastLocation - 1 + 35) % 35,
+                (lastLocation + 1) % 35,
+                (lastLocation - 7 + 35) % 35,
+                (lastLocation + 7) % 35
+            ];
+
+            for (let i = 0; i < buntingNeighbors.length; i++) {
+                if (buntingLocations.includes(buntingNeighbors[i])) {
+                    result = "cheep";
+                    document.getElementById("help").innerHTML = result;
+                    return result;
+                }
+            }
+
+            let row = Math.floor(lastLocation / 7);
+            let col = lastLocation % 7;
+
+            for (let r = row - 1; r <= row + 1; r++) {
+                for (let c = col - 1; c <= col + 1; c++) {
+                    if (r >= 0 && r < 5 && c >= 0 && c < 7) {
+                        let pos = r * 7 + c;
+                        if (pos === toucanLocation) {
+                            result = "caw";
+                            document.getElementById("help").innerHTML = result;
+                            return result;
+                        }
+                    }
+                }
+            }
+
+            for (let r = row - 1; r <= row + 1; r++) {
+                for (let c = col - 1; c <= col + 1; c++) {
+                    if (r >= 0 && r < 5 && c >= 0 && c < 7) {
+                        let pos = r * 7 + c;
+                        if (pos === statueLocation) {
+                            result = "thrrum";
+                            document.getElementById("help").innerHTML = result;
+                            return result;
+                        }
+                    }
+                }
+            }
+
+            document.getElementById("help").innerHTML = result;
+            return result;
+        }
+    </script>
+
+</body>
+</html>
