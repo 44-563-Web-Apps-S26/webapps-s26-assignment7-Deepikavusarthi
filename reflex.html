@@ -4,16 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vusarthi Deepika Reflexes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .box {
+            width: 250px;
+            margin: 15px auto;
+            padding: 12px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 20px;
+        }
+
+        button {
+            padding: 10px 18px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #goButton {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        #haltButton {
+            background-color: #c0392b;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <h1>Vusarthi Deepika Reflexes</h1>
 
-    <div id="target">Your time</div>
-    <div id="counter">Count</div>
+    <div id="target" class="box">Your time</div>
+    <div id="countdown" class="box">Count</div>
 
-    <br>
-
-    <button id="goButton">Go</button>
+    <button id="goButton" onclick="beginTime()">Go</button>
     <button id="haltButton" onclick="recordTime()">Halt</button>
 
     <script>
@@ -22,6 +61,27 @@
         function recordTime() {
             haltTime = Date.now();
             console.log(haltTime);
+        }
+
+        function beginTime() {
+            haltTime = undefined;
+            document.getElementById("target").innerHTML = "Your time";
+
+            for (let i = 0; i <= 5; i++) {
+                setTimeout(function () {
+                    document.getElementById("countdown").innerHTML = i;
+                }, (5 - i) * 1000);
+            }
+
+            setTimeout(function () {
+                if (haltTime === undefined) {
+                    document.getElementById("target").innerHTML = "Not soon enough";
+                } else {
+                    let targetTime = Date.now();
+                    let elapsedTime = haltTime - targetTime;
+                    document.getElementById("target").innerHTML = "Time was " + elapsedTime;
+                }
+            }, 5000);
         }
     </script>
 </body>
