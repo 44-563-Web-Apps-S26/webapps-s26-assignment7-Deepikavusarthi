@@ -153,11 +153,41 @@
         let score = 0;
         let locationsVisited = 0;
         let lastLocation = 0;
-        let statueLocation = 19;
-        let toucanLocation = 14;
-        let lorikeetLocations = [3, 25];
-        let buntingLocations = [2, 5, 11, 20, 21];
+        let statueLocation;
+        let toucanLocation;
+        let lorikeetLocations = [];
+        let buntingLocations = [];
         let gameOver = false;
+
+        function getRandomUniqueLocations(count) {
+            let nums = [];
+
+            while (nums.length < count) {
+                let value = Math.floor(Math.random() * 35);
+                if (!nums.includes(value)) {
+                    nums.push(value);
+                }
+            }
+
+            return nums;
+        }
+
+        function initializeGame() {
+            let randomPlaces = getRandomUniqueLocations(9);
+
+            statueLocation = randomPlaces[0];
+            toucanLocation = randomPlaces[1];
+            lorikeetLocations = [randomPlaces[2], randomPlaces[3]];
+            buntingLocations = [
+                randomPlaces[4],
+                randomPlaces[5],
+                randomPlaces[6],
+                randomPlaces[7],
+                randomPlaces[8]
+            ];
+        }
+
+        initializeGame();
 
         function check(position) {
             if (gameOver) {
@@ -194,6 +224,39 @@
 
             document.getElementById("score").innerHTML =
                 "Score is " + score + ".";
+
+            if (!gameOver) {
+                moveToucan();
+
+                if (toucanLocation === lastLocation) {
+                    gameOver = true;
+                    document.getElementById("help").innerHTML = "The toucan got you!";
+                }
+            }
+        }
+
+        function moveToucan() {
+            let moved = false;
+
+            while (!moved) {
+                let row = Math.floor(toucanLocation / 7);
+                let col = toucanLocation % 7;
+                let direction = Math.floor(Math.random() * 4);
+
+                if (direction === 0 && row > 0) {
+                    toucanLocation = toucanLocation - 7;
+                    moved = true;
+                } else if (direction === 1 && row < 4) {
+                    toucanLocation = toucanLocation + 7;
+                    moved = true;
+                } else if (direction === 2 && col < 6) {
+                    toucanLocation = toucanLocation + 1;
+                    moved = true;
+                } else if (direction === 3 && col > 0) {
+                    toucanLocation = toucanLocation - 1;
+                    moved = true;
+                }
+            }
         }
 
         function help() {
